@@ -1,0 +1,225 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="theme-color" content="#102a43">
+    <meta name="description" content="Faizii International University student registration and records.">
+    <title>Faizii International University</title>
+    <link rel="stylesheet" href="h1.css">
+</head>
+
+<body>
+    <div class="site-shell" id="top">
+        <header class="site-header">
+            <a class="brand" href="#home" data-view-target="home" aria-label="Faizii International University home">
+                <span class="brand-mark" aria-hidden="true">FIU</span>
+                <span class="brand-name">Faizii International <strong>University</strong></span>
+            </a>
+            <nav id="main-nav" class="main-nav hidden" aria-label="Main navigation">
+                <button class="nav-btn" type="button" data-view-target="home">Home</button>
+                <button class="nav-btn" type="button" data-view-target="register">Registration</button>
+                <button class="nav-btn nav-btn-filled" type="button" data-view-target="records">Student List</button>
+                <span id="account-email" class="account-email"></span>
+                <button id="signout-btn" class="nav-btn signout-btn" type="button">Sign Out</button>
+            </nav>
+        </header>
+
+        <main>
+            <section id="auth-view" class="content-view auth-view" aria-labelledby="auth-heading">
+                <div class="section-heading">
+                    <p class="eyebrow eyebrow-dark">FAIZII INTERNATIONAL UNIVERSITY</p>
+                    <h1 id="auth-heading">Welcome back</h1>
+                    <p id="auth-intro">Sign in to manage your student records, or create an account to get started.</p>
+                </div>
+                <div class="auth-card">
+                    <div class="auth-tabs" role="tablist" aria-label="Account">
+                        <button id="signin-tab" class="auth-tab active" type="button" role="tab" aria-selected="true" data-auth-mode="signin">Sign In</button>
+                        <button id="signup-tab" class="auth-tab" type="button" role="tab" aria-selected="false" data-auth-mode="signup">Sign Up</button>
+                    </div>
+                    <form id="signin-form" class="auth-form">
+                        <div class="field">
+                            <label for="signin-email">Email</label>
+                            <input type="email" id="signin-email" autocomplete="username" placeholder="you@example.com" required>
+                        </div>
+                        <div class="field">
+                            <label for="signin-password">Password</label>
+                            <input type="password" id="signin-password" autocomplete="current-password" placeholder="Enter your password" required>
+                        </div>
+                        <button type="submit" class="button button-primary auth-submit">Sign In</button>
+                        <button type="button" class="text-button auth-link" data-auth-mode="forgot">Forgot password?</button>
+                    </form>
+                    <form id="signup-form" class="auth-form hidden">
+                        <div class="field">
+                            <label for="signup-email">Email</label>
+                            <input type="email" id="signup-email" autocomplete="email" placeholder="you@example.com" required>
+                        </div>
+                        <div class="field">
+                            <label for="signup-password">Password</label>
+                            <input type="password" id="signup-password" autocomplete="new-password" minlength="8" placeholder="At least 8 characters" required>
+                        </div>
+                        <div class="field">
+                            <label for="signup-password-confirm">Confirm Password</label>
+                            <input type="password" id="signup-password-confirm" autocomplete="new-password" minlength="8" placeholder="Re-enter your password" required>
+                        </div>
+                        <button type="submit" class="button button-primary auth-submit">Create Account</button>
+                    </form>
+                    <form id="forgot-form" class="auth-form hidden">
+                        <p class="auth-help">Enter your account email and we'll send you a secure password reset link.</p>
+                        <div class="field">
+                            <label for="forgot-email">Email</label>
+                            <input type="email" id="forgot-email" autocomplete="email" placeholder="you@example.com" required>
+                        </div>
+                        <button type="submit" class="button button-primary auth-submit">Send Reset Link</button>
+                        <button type="button" class="text-button auth-link" data-auth-mode="signin">Back to Sign In</button>
+                    </form>
+                    <form id="reset-form" class="auth-form hidden">
+                        <p class="auth-help">Choose a new password for your account.</p>
+                        <div class="field">
+                            <label for="reset-password">New Password</label>
+                            <input type="password" id="reset-password" autocomplete="new-password" minlength="8" placeholder="At least 8 characters" required>
+                        </div>
+                        <div class="field">
+                            <label for="reset-password-confirm">Confirm New Password</label>
+                            <input type="password" id="reset-password-confirm" autocomplete="new-password" minlength="8" placeholder="Re-enter your password" required>
+                        </div>
+                        <button type="submit" class="button button-primary auth-submit">Update Password</button>
+                    </form>
+                    <p id="auth-status" class="form-status" role="status" aria-live="polite"></p>
+                </div>
+            </section>
+
+            <div id="authenticated-app" class="hidden">
+                <section id="home-view" class="home-view" data-view-panel>
+                    <div class="hero">
+                        <div class="hero-content">
+                            <p class="eyebrow"><span class="eyebrow-line"></span> LEARN · LEAD · INSPIRE</p>
+                            <h1>Build your future<br>at <span>Faizii International</span></h1>
+                            <p class="hero-copy">A community of curious minds, dedicated to learning, discovery, and making a difference.</p>
+                            <div class="hero-actions">
+                                <button class="button button-light" type="button" data-view-target="register">
+                                Register a Student <span aria-hidden="true">→</span>
+                            </button>
+                                <button class="button button-outline" type="button" data-view-target="records">
+                                View Student List
+                            </button>
+                            </div>
+                        </div>
+                        <div class="hero-caption"><span></span> A place to learn, a future to shape</div>
+                    </div>
+                    <div class="welcome-row">
+                        <div>
+                            <p class="eyebrow eyebrow-dark">WELCOME TO FIU</p>
+                            <h2>Learning opens every door.</h2>
+                        </div>
+                        <p class="welcome-copy">Use the registration form to add a student, or open the student list to review and manage university records.</p>
+                    </div>
+                    <section id="student-list-section" class="student-list-section" aria-labelledby="records-heading">
+                        <div class="student-list-content">
+                            <div class="section-heading">
+                                <p class="eyebrow eyebrow-dark">FAIZII INTERNATIONAL UNIVERSITY</p>
+                                <h2 id="records-heading">Student Directory</h2>
+                                <p>View, update, or remove student records.</p>
+                            </div>
+                            <div class="records-card">
+                                <div class="records-heading">
+                                    <h2>Registered Students</h2>
+                                    <button type="button" class="button button-primary button-compact" data-view-target="register">+ Add Student</button>
+                                </div>
+                                <div class="table-responsive">
+                                    <table>
+                                        <thead>
+                                            <tr>
+                                                <th scope="col">ID</th>
+                                                <th scope="col">Roll No.</th>
+                                                <th scope="col">Student Name</th>
+                                                <th scope="col">Father's Name</th>
+                                                <th scope="col">Department</th>
+                                                <th scope="col">Contact</th>
+                                                <th scope="col">Gmail</th>
+                                                <th scope="col">Address</th>
+                                                <th scope="col">Actions</th>
+                                            </tr>
+                                        </thead>
+                                        <tbody id="student-table-body"></tbody>
+                                    </table>
+                                </div>
+                                <p id="no-data" class="no-data">No student records yet. Register a student to get started.</p>
+                                <p id="records-status" class="form-status" role="status" aria-live="polite"></p>
+                            </div>
+                        </div>
+                    </section>
+                </section>
+
+                <section id="register-view" class="content-view hidden" data-view-panel aria-labelledby="form-heading">
+                    <div class="section-heading">
+                        <p class="eyebrow eyebrow-dark">FAIZII INTERNATIONAL UNIVERSITY</p>
+                        <h1 id="form-heading">Student Registration</h1>
+                        <p>Enter the student's details below to add them to the university register.</p>
+                    </div>
+                    <form id="student-form" class="form-card">
+                        <input type="hidden" id="edit-id" value="">
+                        <div class="form-grid">
+                            <div class="field">
+                                <label for="first-name">First Name</label>
+                                <input type="text" id="first-name" placeholder="Enter first name" autocomplete="given-name" required>
+                            </div>
+                            <div class="field">
+                                <label for="last-name">Last Name</label>
+                                <input type="text" id="last-name" placeholder="Enter last name" autocomplete="family-name" required>
+                            </div>
+                            <div class="field">
+                                <label for="father-name">Father's Name</label>
+                                <input type="text" id="father-name" placeholder="Enter father's name" required>
+                            </div>
+                            <div class="field">
+                                <label for="roll-number">Roll Number</label>
+                                <input type="text" id="roll-number" placeholder="Enter roll number" required>
+                            </div>
+                            <div class="field">
+                                <label for="contact-number">Contact Number</label>
+                                <input type="tel" id="contact-number" placeholder="Enter contact number" autocomplete="tel" required>
+                            </div>
+                            <div class="field">
+                                <label for="gmail-address">Gmail Address</label>
+                                <input type="email" id="gmail-address" placeholder="example@gmail.com" autocomplete="email" required>
+                            </div>
+                            <div class="field">
+                                <label for="address">Address</label>
+                                <input type="text" id="address" placeholder="Enter home address" autocomplete="street-address" required>
+                            </div>
+                            <div class="field">
+                                <label for="department">Department</label>
+                                <select id="department" required>
+                                <option value="" disabled selected>Select a department</option>
+                                <option value="Computer Science">Computer Science</option>
+                                <option value="Business Administration">Business Administration</option>
+                                <option value="Engineering">Engineering</option>
+                                <option value="Arts and Humanities">Arts and Humanities</option>
+                                <option value="Social Sciences">Social Sciences</option>
+                                <option value="Natural Sciences">Natural Sciences</option>
+                            </select>
+                            </div>
+                        </div>
+                        <div class="form-actions">
+                            <button type="submit" id="save-btn" class="button button-primary">Register Student</button>
+                            <button type="button" id="cancel-btn" class="button button-muted hidden">Cancel Edit</button>
+                            <button type="button" class="text-button" data-view-target="home">Back to Home</button>
+                        </div>
+                        <p id="form-status" class="form-status" role="status" aria-live="polite"></p>
+                    </form>
+                </section>
+            </div>
+        </main>
+
+        <footer class="site-footer">
+            <span class="footer-mark">FIU</span>
+            <p>Faizii International University <span>·</span> Learn. Lead. Inspire.</p>
+        </footer>
+    </div>
+    <script src="config.js"></script>
+    <script src="h1.js"></script>
+</body>
+
+</html>

@@ -1,0 +1,3 @@
+fiu.sqlite
+fiu.sqlite-shm
+fiu.sqlite-wal
