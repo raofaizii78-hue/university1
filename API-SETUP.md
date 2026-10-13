@@ -1,6 +1,6 @@
 # API setup
 
-The frontend uses the Node.js API configured in `config.js`. The API stores accounts, sessions, password-reset tokens, and student records in SQLite. Student records are shared with every signed-in account; only the account that created a record can update or delete it.
+The frontend uses the Node.js API configured in `public/config.js`. The API stores accounts, sessions, password-reset tokens, and student records in SQLite. Student records are shared with every signed-in account; only the account that created a record can update or delete it.
 
 ## Local development
 
@@ -8,7 +8,7 @@ The frontend uses the Node.js API configured in `config.js`. The API stores acco
 2. Open a terminal in this folder and run `node server.js`.
 3. Keep that terminal open while using the page.
 4. Check `http://127.0.0.1:3000/health`. It should return `{"status":"ok","storage":"sqlite"}`.
-5. Open `h1.html` or serve the folder with VS Code Live Server.
+5. Open `public/h1.html` or serve the `public` folder with VS Code Live Server.
 
 No package installation is required. Node's built-in SQLite module is used. By default, the API listens only on the local computer and allows local/file-based frontend origins.
 
@@ -25,7 +25,7 @@ Configure the server environment:
 
 Set these values in the hosting provider's environment configuration, start the server with `node server.js`, and configure the provider's HTTPS endpoint/reverse proxy to route requests to the API port. Use HTTPS for the public API and frontend.
 
-Update `apiBaseUrl` in `config.js` to the API's public HTTPS URL, for example:
+Update `apiBaseUrl` in `public/config.js` to the API's public HTTPS URL, for example:
 
 ```js
 apiBaseUrl: 'https://api.university.example',
