@@ -8,6 +8,10 @@ const scrypt = promisify(scryptCallback);
 const HOST = process.env.FIU_HOST || '127.0.0.1';
 const PORT = Number(process.env.FIU_PORT || 3000);
 const DATABASE_PATH = process.env.FIU_DB_PATH || path.join(__dirname, 'fiu.sqlite');
+const configuredOrigins = process.env.FIU_ALLOWED_ORIGINS;
+const allowedOrigins = configuredOrigins
+    ? new Set(configuredOrigins.split(',').map((origin) => origin.trim()).filter(Boolean))
+    : null;
 const SESSION_LIFETIME_MS = 7 * 24 * 60 * 60 * 1000;
 const RESET_LIFETIME_MS = 60 * 60 * 1000;
 const PASSWORD_MIN_LENGTH = 8;
@@ -80,7 +84,10 @@ function emptyResponse(response, status = 204) {
 
 function setCorsHeaders(request, response) {
     const origin = request.headers.origin;
-    if (origin && (origin === 'null' || /^https?:\/\/(localhost|127\.0\.0\.1)(:\d+)?$/.test(origin))) {
+    const isAllowedOrigin = allowedOrigins
+        ? allowedOrigins.has(origin)
+        : origin === 'null' || /^https?:\/\/(localhost|127\.0\.0\.1)(:\d+)?$/.test(origin || '');
+    if (origin && isAllowedOrigin) {
         response.setHeader('Access-Control-Allow-Origin', origin);
         response.setHeader('Vary', 'Origin');
     }
@@ -168,7 +175,7 @@ function studentFields(body) {
     return fields;
 }
 
-function publicStudent(student) {
+function publicStudent(student, viewerUserId) {
     return {
         id: student.id,
         firstName: student.first_name,
@@ -178,12 +185,17 @@ function publicStudent(student) {
         contact: student.contact,
         gmail: student.gmail,
         address: student.address,
-        department: student.department
+        department: student.department,
+        canEdit: student.user_id === viewerUserId
     };
 }
 
 function studentById(id, userId) {
     return database.prepare('SELECT * FROM students WHERE id = ? AND user_id = ?').get(id, userId);
+}
+
+function sharedStudentById(id) {
+    return database.prepare('SELECT * FROM students WHERE id = ?').get(id);
 }
 
 async function routeRequest(request, response) {
@@ -292,15 +304,15 @@ async function routeRequest(request, response) {
     const studentIdMatch = /^\/students\/(\d+)$/.exec(url.pathname);
 
     if (method === 'GET' && url.pathname === '/students') {
-        const rows = database.prepare('SELECT * FROM students WHERE user_id = ? ORDER BY id').all(user.id);
-        jsonResponse(response, 200, rows.map(publicStudent));
+        const rows = database.prepare('SELECT * FROM students ORDER BY id').all();
+        jsonResponse(response, 200, rows.map((student) => publicStudent(student, user.id)));
         return;
     }
 
     if (method === 'GET' && studentIdMatch) {
-        const student = studentById(Number(studentIdMatch[1]), user.id);
+        const student = sharedStudentById(Number(studentIdMatch[1]));
         if (!student) throw new ApiError(404, 'Student record not found.');
-        jsonResponse(response, 200, publicStudent(student));
+        jsonResponse(response, 200, publicStudent(student, user.id));
         return;
     }
 
@@ -323,7 +335,7 @@ async function routeRequest(request, response) {
                 fields.address,
                 fields.department
             );
-            jsonResponse(response, 201, publicStudent(studentById(Number(result.lastInsertRowid), user.id)));
+            jsonResponse(response, 201, publicStudent(studentById(Number(result.lastInsertRowid), user.id), user.id));
         } catch (error) {
             if (String(error.message).includes('UNIQUE')) {
                 throw new ApiError(409, 'A student with that roll number already exists in your account.');
@@ -362,7 +374,7 @@ async function routeRequest(request, response) {
             }
             throw error;
         }
-        jsonResponse(response, 200, publicStudent(studentById(studentId, user.id)));
+        jsonResponse(response, 200, publicStudent(studentById(studentId, user.id), user.id));
         return;
     }
 

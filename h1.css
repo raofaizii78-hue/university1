@@ -42,11 +42,15 @@ button {
 }
 
 .site-header {
+    position: sticky;
+    top: 0;
+    z-index: 1000;
     min-height: 88px;
     display: flex;
     align-items: center;
     justify-content: space-between;
     gap: 24px;
+    background: var(--paper);
 }
 
 .brand {
@@ -593,6 +597,11 @@ tbody tr:hover {
 
 .delete-btn:hover {
     background: #ffe2df;
+}
+
+.record-readonly {
+    color: var(--muted);
+    font-size: 12px;
 }
 
 .no-data {

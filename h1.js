@@ -497,10 +497,10 @@ function showAuthMode(mode) {
 
     if (mode === 'signin') {
         authHeading.textContent = 'Welcome back';
-        authIntro.textContent = 'Sign in to manage your student records, or create an account to get started.';
+        authIntro.textContent = 'Sign in to view the shared student directory, or create an account to get started.';
     } else if (mode === 'signup') {
         authHeading.textContent = 'Create your account';
-        authIntro.textContent = 'Create an account to securely save and manage your student records.';
+        authIntro.textContent = 'Create an account to securely add and manage your student records in the shared directory.';
     } else if (mode === 'forgot') {
         authHeading.textContent = 'Reset your password';
         authIntro.textContent = 'We will email you a secure link to choose a new password.';
@@ -614,13 +614,18 @@ function renderTable() {
         });
 
         const actionsCell = document.createElement('td');
-        const actionGroup = document.createElement('div');
-        actionGroup.className = 'action-group';
-        actionGroup.append(
-            createActionButton('edit', student.id, 'Edit', 'action-btn edit-btn'),
-            createActionButton('delete', student.id, 'Delete', 'action-btn delete-btn')
-        );
-        actionsCell.appendChild(actionGroup);
+        if (student.canEdit) {
+            const actionGroup = document.createElement('div');
+            actionGroup.className = 'action-group';
+            actionGroup.append(
+                createActionButton('edit', student.id, 'Edit', 'action-btn edit-btn'),
+                createActionButton('delete', student.id, 'Delete', 'action-btn delete-btn')
+            );
+            actionsCell.appendChild(actionGroup);
+        } else {
+            actionsCell.textContent = 'View only';
+            actionsCell.className = 'record-readonly';
+        }
         row.appendChild(actionsCell);
         tableBody.appendChild(row);
     });
@@ -639,7 +644,8 @@ function normalizeStudent(student) {
         contact: student.contact ?? '',
         gmail: student.gmail ?? '',
         address: student.address ?? '',
-        department: student.department ?? ''
+        department: student.department ?? '',
+        canEdit: student.canEdit === true
     };
 }
 
