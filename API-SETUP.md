@@ -8,7 +8,7 @@ The frontend uses the Node.js API configured in `public/config.js`. The API stor
 2. Open a terminal in this folder and run `node server.js`.
 3. Keep that terminal open while using the page.
 4. Check `http://127.0.0.1:3000/health`. It should return `{"status":"ok","storage":"sqlite"}`.
-5. Open `public/h1.html` or serve the `public` folder with VS Code Live Server.
+5. Open `public/index.html` or serve the `public` folder with VS Code Live Server. Wrangler serves this page at the root URL (`/`).
 
 No package installation is required. Node's built-in SQLite module is used. By default, the API listens only on the local computer and allows local/file-based frontend origins.
 
